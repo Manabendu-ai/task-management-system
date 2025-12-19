@@ -70,7 +70,6 @@ desktop.ini
 ############################################
 .env
 .env.*
-application.properties
 application-local.yml
 application-prod.properties
 application-prod.yml
