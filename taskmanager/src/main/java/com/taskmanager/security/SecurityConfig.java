@@ -2,6 +2,7 @@ package com.taskmanager.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,13 +23,13 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http){
 
         http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/auth/**").permitAll()
-            .requestMatchers("/api/**").permitAll()
+            .requestMatchers(HttpMethod.POST,  "/api/auth/**").permitAll()
             .anyRequest().authenticated()
 
         );
