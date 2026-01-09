@@ -2,15 +2,12 @@ package com.taskmanager.entity;
 
 import java.time.LocalDateTime;
 
-import com.taskmanager.enums.Role;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,33 +16,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_profiles") 
+@Table(name = "issue_comments", indexes = {
+    @Index(name="idx_comment_issue", columnList = "issue_id ")
+}) 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class UserProfileUpdate {
- 
+public class IssueComment {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
-    private String userName;
+    @Column(name="issue_id", nullable = false)
+    private Long issueId;
 
-    @Column(unique = true)
-    private String email;
+    private String authorEmail;
 
-    private String department;
-
-    private String designation;
-
-    private String organizationName; 
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
- 
-    private boolean active=true;
+    @Column(length = 2000)
+    private String body;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

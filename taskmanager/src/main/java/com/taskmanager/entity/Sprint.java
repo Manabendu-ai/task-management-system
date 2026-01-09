@@ -2,7 +2,7 @@ package com.taskmanager.entity;
 
 import java.time.LocalDateTime;
 
-import com.taskmanager.enums.Role;
+import com.taskmanager.enums.SprintState;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,33 +19,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_profiles") 
+@Table(name = "sprints") 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class UserProfileUpdate {
- 
+public class Sprint {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long sprintId;
 
-    private String userName;
+    private String sprintName;
 
-    @Column(unique = true)
-    private String email;
+    private LocalDateTime startDate;
 
-    private String department;
-
-    private String designation;
-
-    private String organizationName; 
+    private LocalDateTime endDate;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
- 
-    private boolean active=true;
+    private SprintState sprintState;
+
+    @Column(length=2000)
+    private String sprintDescription;
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

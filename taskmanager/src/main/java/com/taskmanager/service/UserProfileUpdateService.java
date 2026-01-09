@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.taskmanager.entity.UserProfileUpdate;
+import com.taskmanager.enums.Role;
 import com.taskmanager.repository.UserProfileUpdateRepo;
 
 import lombok.AllArgsConstructor;
@@ -32,6 +33,20 @@ public class UserProfileUpdateService {
 
     public UserProfileUpdate getUserProfileByEmail(String email){
         return userProfileUpdateRepo.findByEmail(email); 
+    }
+
+    public UserProfileUpdate updateUserRole(String email, Role newRole){
+        
+        UserProfileUpdate user = userProfileUpdateRepo.findByEmail(email);
+
+        if(user == null){
+            throw new RuntimeException("User not found");
+        }
+
+        user.setRole(newRole);
+
+        return userProfileUpdateRepo.save(user);
+
     }
 
 }
