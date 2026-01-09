@@ -1,17 +1,24 @@
 package com.taskmanager.service;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.taskmanager.dto.AuthResponseDto;
+import com.taskmanager.dto.LoggedRequestDto;
 import com.taskmanager.dto.LoginRequestDto;
 import com.taskmanager.dto.RegisterRequestDto;
+import com.taskmanager.entity.TokenBlockList;
 import com.taskmanager.entity.User;
 import com.taskmanager.enums.Role;
+import com.taskmanager.repository.TokenBlockListRepo;
 import com.taskmanager.repository.UserRepo;
 import com.taskmanager.security.JwtUtil;
 
+import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -28,6 +35,12 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired 
+    private TokenBlockListRepo tokenBlockListRepo;
 
     public boolean register(RegisterRequestDto requestData){
 
@@ -73,6 +86,55 @@ public class UserService {
         }
 
         return authResponseDto;
+
+    }
+
+    public void forgotPassword(String email){
+
+        User user = userRepo.findByEmail(email);
+
+        if(user == null){
+            throw new RuntimeException("User not found");
+        }
+
+        String token = UUID.randomUUID().toString();
+        user.setResetToken(token);
+        user.setResetTokenExpiration(LocalDateTime.now().plusMinutes(10));
+
+        userRepo.save(user);
+
+        emailService.sendResetPasswordMail(email, token);
+
+    }
+
+    public void resetPassword(String token, String newPassword){
+
+        User user = userRepo.findByResetToken(token);
+
+        if(user == null){
+            throw new RuntimeException("User not found");
+        }
+
+        if (user.getResetTokenExpiration().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Reset token expired");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetToken(null);  
+        user.setResetTokenExpiration(null); 
+        userRepo.save(user);
+
+    }
+
+    public void loggedout(LoggedRequestDto loggedRequestDto){
+
+        Claims claims = jwtUtil.getClaims(loggedRequestDto.token); 
+
+        TokenBlockList tokenBlockList = new TokenBlockList();
+        tokenBlockList.setToken(loggedRequestDto.token); 
+        tokenBlockList.setExpiry(claims.getExpiration()); 
+
+        tokenBlockListRepo.save(tokenBlockList);  
 
     }
 

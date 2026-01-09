@@ -5,12 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.taskmanager.dto.AuthResponseDto;
+import com.taskmanager.dto.ForgotPasswordDto;
+import com.taskmanager.dto.LoggedRequestDto;
 import com.taskmanager.dto.LoginRequestDto;
 import com.taskmanager.dto.RegisterRequestDto;
+import com.taskmanager.dto.ResetPasswordDto;
 import com.taskmanager.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -63,6 +67,37 @@ public class UserAuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
         }
+
+    }
+
+    @PostMapping("/forgot_password")
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordDto forgotPasswordDto){
+
+        userService.forgotPassword(forgotPasswordDto.email);  
+
+        return ResponseEntity.ok("Reset password email sent to your registered email address");
+
+    }
+
+    @PostMapping("/reset_password")
+    public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordDto resetPasswordDto){
+
+        userService.resetPassword(resetPasswordDto.token, resetPasswordDto.newPassword);
+
+        return ResponseEntity.ok("Your password is changed. You can now login.");
+
+    }
+
+    @PostMapping("/loggedOut")
+    public ResponseEntity<String> loggedOut(
+        @RequestBody LoggedRequestDto loggedRequestDto,
+        @RequestHeader("Authorization") String authHeader 
+    ){
+        //String token = authHeader.substring(7);
+
+        userService.loggedout(loggedRequestDto);
+
+        return ResponseEntity.ok("Logout Successful."); 
 
     }
 

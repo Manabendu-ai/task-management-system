@@ -2,12 +2,8 @@ package com.taskmanager.entity;
 
 import java.time.LocalDateTime;
 
-import com.taskmanager.enums.Role;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,31 +15,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
-@Getter
-@Setter
+@Table(name = "user_profiles") 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
-public class User {
-    
+public class UserProfileUpdate {
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
 
-    @Column(nullable=false, length=50)
-    private String username;
+    private String userName;
 
-    @Column(nullable=false)
-    private String password;
-
-    @Column(nullable=false, unique=true)
+    @Column(unique = true)
     private String email;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String department;
 
-    private String resetToken;
-    private LocalDateTime resetTokenExpiration;
+    private String designation;
+
+    private String organizationName; 
+ 
+    private boolean active=true;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }

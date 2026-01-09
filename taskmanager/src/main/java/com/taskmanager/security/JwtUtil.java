@@ -71,4 +71,14 @@ public class JwtUtil {
         return getClaims(token).getSubject();
     }
 
+    public String extractToken(String header){
+
+        if(header != null && header.startsWith("Bearer ")){
+            return header.substring(7);
+        }
+
+        return null;
+        
+    }
+
 }
