@@ -14,7 +14,7 @@ public interface IssueRepo extends JpaRepository<Issue, Long> {
 
     List<Issue> findByAssignedByEmail(String assignedByEmail);
 
-    List<Issue> findBySpringId(String sprintId);
+    List<Issue> findBySprintId(Long sprintId);
 
     List<Issue> findByIssueStatus(String issueStatus);
 

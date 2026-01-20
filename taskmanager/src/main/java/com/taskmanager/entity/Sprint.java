@@ -2,6 +2,8 @@ package com.taskmanager.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.taskmanager.enums.SprintState;
 
 import jakarta.persistence.Column;
@@ -43,6 +45,7 @@ public class Sprint {
     @Column(length=2000)
     private String sprintDescription;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
 }

@@ -2,6 +2,8 @@ package com.taskmanager.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.taskmanager.enums.IssuePriority;
 import com.taskmanager.enums.IssueStatus;
 import com.taskmanager.enums.IssueType;
@@ -55,9 +57,11 @@ public class Issue {
 
     private String reportToEmail;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt = LocalDateTime.now(); 
+    @CreationTimestamp
+    private LocalDateTime updatedAt; 
 
     private LocalDateTime dueDate;
 
