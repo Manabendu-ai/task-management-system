@@ -28,7 +28,7 @@ public class Attachment {
 
     private String fileName;
 
-    private String fileSize;
+    private Long fileSize;
 
     private String contentType;
 
@@ -37,5 +37,9 @@ public class Attachment {
     private Long cloudId;
 
     private String uploadedBy;
+
+    private String cloudUrl;    
+    
+    private String cloudPublicId;   
 
 }
