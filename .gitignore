@@ -74,7 +74,7 @@ desktop.ini
 application-local.yml
 application-prod.properties
 application-prod.yml
-application.properties
+src/main/resources/application.properties
 
 ############################################
 # Docker (optional)
