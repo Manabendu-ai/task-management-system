@@ -2,6 +2,8 @@ package com.taskmanager.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.taskmanager.enums.Role;
 
 import jakarta.persistence.Column;
@@ -47,6 +49,7 @@ public class UserProfileUpdate {
  
     private boolean active=true;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
 }
