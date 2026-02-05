@@ -1,5 +1,7 @@
 package com.taskmanager.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +34,8 @@ public class WorkFlowService {
     @Transactional
     public WorkFlow updateWorkFlow(Long workFlowId, WorkFlow updatedWorkFlow){
 
-        WorkFlow workFlow = workFlowRepo.findById(workFlowId)
-            .orElseThrow(() -> new RuntimeException("WorkFlow not found"));
+        WorkFlow workFlow = getWorkFlowById(workFlowId);
 
-        
         workFlow.setWorkFlowName(updatedWorkFlow.getWorkFlowName()); 
 
         workFlow.setWorkFlowDescription(updatedWorkFlow.getWorkFlowDescription()); 
@@ -53,7 +53,26 @@ public class WorkFlowService {
 
         return workFlowRepo.save(workFlow);
 
+    }
 
+    public WorkFlow getWorkFlowByName(String workFlowName){
+        return workFlowRepo.findByWorkFlowName(workFlowName);
+    }
+
+    public List<WorkFlow> getAllWorkFlows(){
+        return workFlowRepo.findAll();
+    }
+
+    public WorkFlow getWorkFlowById(Long workFlowId){
+
+        return workFlowRepo.findById(workFlowId)
+            .orElseThrow(() -> new RuntimeException("WorkFlow not found"));
+
+    }
+
+    public void deleteWorkFlow(Long workFlowId){
+        WorkFlow workFlow = getWorkFlowById(workFlowId);
+        workFlowRepo.delete(workFlow);
     }
 
 }
