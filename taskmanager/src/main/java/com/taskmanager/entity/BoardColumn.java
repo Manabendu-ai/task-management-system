@@ -1,5 +1,7 @@
 package com.taskmanager.entity;
 
+import com.taskmanager.enums.IssueStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +38,7 @@ public class BoardColumn {
 
     private String name;
 
-    private String statusKey;
+    private IssueStatus statusKey;
 
     private Integer position;
 
