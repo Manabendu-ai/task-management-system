@@ -48,4 +48,6 @@ public class Sprint {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    private Long projectId;
+
 }

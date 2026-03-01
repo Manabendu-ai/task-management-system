@@ -68,5 +68,11 @@ public class Issue {
     private Long sprintId;
 
     private Long epicId;
+
+    private Long parentIssueId;
+
+    private Integer backlogPosition;
+
+    private Long projectId;
     
 }
