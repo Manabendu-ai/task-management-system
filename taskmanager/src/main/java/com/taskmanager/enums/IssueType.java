@@ -1,5 +1,5 @@
 package com.taskmanager.enums;
 
 public enum IssueType {
-    TASK, BUG, EPIC, SUB_TASK
+    TASK, BUG, EPIC, SUB_TASK, STORIES
 }

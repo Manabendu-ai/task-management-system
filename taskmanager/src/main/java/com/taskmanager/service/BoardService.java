@@ -42,11 +42,11 @@ public class BoardService {
     }
 
     public List<BoardColumn> getBoardColumns(Long boardId){
-        return boardColumnRepo.findByBoardIdOrderByPosition(boardId);
+        return boardColumnRepo.findByBoardBoardIdOrderByPosition(boardId);
     }
 
     public List<BoardCard> getBoardCard(Long boardId, Long boardColumnId){
-        return boardCardRepo.findByBoardIdAndBoardColumnIdOrderByPosition(boardId, boardColumnId);
+        return boardCardRepo.findByBoardIdAndBoardColumnBoardColumnIdOrderByPosition(boardId, boardColumnId);
     }
 
     @Transactional
@@ -66,7 +66,7 @@ public class BoardService {
 
         if(boardColumn.getWipLimit() !=null && boardColumn.getWipLimit()> 0) {
 
-			Long count = boardCardRepo.countByBoardIdAndBoardColumnId(boardId, boardColumnId);
+			Long count = boardCardRepo.countByBoardIdAndBoardColumnBoardColumnId(boardId, boardColumnId);
 			
 			if(count >= boardColumn.getWipLimit()) {
 				throw new RuntimeException("WIP limit reached for column: " + boardColumn.getName());
@@ -74,7 +74,7 @@ public class BoardService {
 
 		}
 
-        List<BoardCard> existing = boardCardRepo.findByBoardIdAndBoardColumnIdOrderByPosition(boardId, boardColumnId);
+        List<BoardCard> existing = boardCardRepo.findByBoardIdAndBoardColumnBoardColumnIdOrderByPosition(boardId, boardColumnId);
 		
 		int postion = existing.size();
 		
@@ -110,7 +110,7 @@ public class BoardService {
 		
 		if(toColumn.getWipLimit()!=null && toColumn.getWipLimit()>0 ) {
 
-			Long count = boardCardRepo.countByBoardIdAndBoardColumnId(boardId, boardColumnId);
+			Long count = boardCardRepo.countByBoardIdAndBoardColumnBoardColumnId(boardId, boardColumnId);
 			
 			if(!Objects.equals(fromColumn.getBoardColumnId(), toColumn.getBoardColumnId()) && count >=toColumn.getWipLimit() ) {
 			    throw new RuntimeException("Wip limit exceeded for column: " + toColumn.getName());
@@ -118,7 +118,7 @@ public class BoardService {
 			
 		}
 		
-		List<BoardCard> fromCards = boardCardRepo.findByBoardIdAndBoardColumnIdOrderByPosition(boardId,fromColumn.getBoardColumnId());
+		List<BoardCard> fromCards = boardCardRepo.findByBoardIdAndBoardColumnBoardColumnIdOrderByPosition(boardId,fromColumn.getBoardColumnId());
 		
 		for(BoardCard c : fromCards) {
 			if(c.getPosition()> card.getPosition() ) {
@@ -127,7 +127,7 @@ public class BoardService {
 			}
 		}
 		
-		List<BoardCard> toCards = boardCardRepo.findByBoardIdAndBoardColumnIdOrderByPosition(boardId,toColumn.getBoardColumnId());
+		List<BoardCard> toCards = boardCardRepo.findByBoardIdAndBoardColumnBoardColumnIdOrderByPosition(boardId,toColumn.getBoardColumnId());
 		
 		for(BoardCard c : toCards) {
 			if(c.getPosition()> card.getPosition() ) {

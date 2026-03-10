@@ -10,14 +10,14 @@ import com.taskmanager.entity.BoardCard;
 @Repository
 public interface BoardCardRepo extends JpaRepository<BoardCard, Long> {
     
-    List<BoardCard> findByBoardIdAndBoardColumnIdOrderByPosition(
+    List<BoardCard> findByBoardIdAndBoardColumnBoardColumnIdOrderByPosition(
         Long boardId,
         Long boardColumnId
     );
 
     BoardCard findByIssueId(Long issueId);
 
-    Long countByBoardIdAndBoardColumnId(
+    Long countByBoardIdAndBoardColumnBoardColumnId(
         Long boardId,
         Long boardColumnId
     );

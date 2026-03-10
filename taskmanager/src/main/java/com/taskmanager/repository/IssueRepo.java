@@ -16,6 +16,8 @@ public interface IssueRepo extends JpaRepository<Issue, Long> {
 
     List<Issue> findBySprintId(Long sprintId);
 
+    List<Issue> findByEpicId(Long epicId);
+
     List<Issue> findByIssueStatus(String issueStatus);
 
     List<Issue> findByProjectIdAndSprintIdIsNullOrderByBacklogPosition(Long projectId);

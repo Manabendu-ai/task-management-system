@@ -10,6 +10,6 @@ import com.taskmanager.entity.BoardColumn;
 @Repository
 public interface BoardColumnRepo extends JpaRepository<BoardColumn, Long> {
 
-    List<BoardColumn> findByBoardIdOrderByPosition(Long boardId);
+    List<BoardColumn> findByBoardBoardIdOrderByPosition(Long boardId);
 
 }
